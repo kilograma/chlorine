@@ -54,6 +54,8 @@ def responseMsg(request):
 	if need_wiki_result:
 		replyContent += get_wiki_result(queryStr)
 		needed_search_count -= 1
+	if len(replyContent) == 0:
+		replyContent = "目前测试阶段只有外语才会有回复~~"
 	return getReplyXml(msg,replyContent)
 
 def paraseMsgXml(rootElem):
