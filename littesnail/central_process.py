@@ -46,7 +46,7 @@ def responseMsg(request):
 	#rawStr = smart_str(request.POST['XML'])
 	msg = paraseMsgXml(ET.fromstring(rawStr))
 	queryStr = msg.get('Content','You have input nothing~')
-	replyContent ""
+	replyContent = ""
 	needed_search_count = 5
 	if need_youdao_result(queryStr):
 		replyContent += getYoudaoResult(queryStr)
