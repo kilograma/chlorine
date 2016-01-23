@@ -46,13 +46,15 @@ def responseMsg(request):
 	#rawStr = smart_str(request.POST['XML'])
 	msg = paraseMsgXml(ET.fromstring(rawStr))
 	queryStr = msg.get('Content','You have input nothing~')
+	msg_id = msg.get('MsgId', "-1")
+	user_id = msg.get("FromUserName", "-1")
 	replyContent = ""
 	needed_search_count = 5
 	if need_youdao_result(queryStr):
 		replyContent += get_youdao_result(queryStr)
 		needed_search_count -= 1 
 	if need_wiki_result(queryStr):
-		replyContent += get_wiki_result(queryStr)
+		replyContent += get_wiki_result(queryStr, user_id, msg_id)
 		needed_search_count -= 1
 	if len(replyContent) == 0:
 		replyContent = "目前测试阶段只有外语才会有回复~~"
