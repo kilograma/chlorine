@@ -5,7 +5,7 @@ from whoosh.fields import *
 import jieba
 from whoosh.qparser import QueryParser
 
-WIKI_INDEX_DIR = "../index/wiki_index"
+WIKI_INDEX_DIR = "index/wiki_index"
 
 ix = None
 
@@ -55,7 +55,7 @@ def make_index(wiki_path):
 	writer.commit()
 	return
 
-def search_index(queryLine, query_field, N):#UTF8 str
+def search_index(queryLine, query_field, N):#unicode!!!
 	global ix
 	global WIKI_INDEX_DIR
 	if not ix:

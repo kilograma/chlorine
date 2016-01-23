@@ -11,4 +11,4 @@ class UserQuery(models.Model):
 	query_result = models.CharField(max_length=1000)
 
 	def __str__(self):
-		return self.user_id + " " + query_str
+		return self.user_id + " " + self.query_str
