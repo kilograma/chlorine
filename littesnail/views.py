@@ -7,14 +7,14 @@ import jieba
 import os
 
 def test(request):
-	return HttpResponse("Test ok!")
+	#return HttpResponse("Test ok!")
 	from process_wiki import get_wiki_result
 	if True:
 		from whoosh.qparser import QueryParser
 		print os.getcwd()
 		ix = open_dir("index/wiki_index")
 		with ix.searcher() as searcher:
-			qstr = "中华共和国"
+			qstr = "维基编号 1314"
 			rstr = get_wiki_result(qstr, "-1", "-1")
 			print rstr
 			print "=============="

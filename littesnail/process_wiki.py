@@ -19,7 +19,8 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 		if len(results) == 0:
 			rtStr = "竟然没有找到和维基百科编号%s相关的条目...真的不是输错数字了吗?"%iid
 		else:
-			rtStr = "关于%s，维基百科链接：https://zh.wikipedia.org/wiki?curid=%s。我们为您匹配的正文如下:\n%s\n"%(results[0]["title_show"], results[0]["iid"] ,results[0]["content_show"])
+			iid, title, content = results[0]
+			rtStr = "关于%s，维基百科链接：https://zh.wikipedia.org/wiki?curid=%s。我们为您匹配的正文如下:\n%s\n"%(title, iid ,content)
 	else:
 		queryLine_back = queryLine
 		queryLine = ' '.join(jieba.cut(queryLine, cut_all=False))
@@ -30,7 +31,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 		else:
 			rtStr = "您是不是在找下面的条目:\n"
 			for iid, title, content in results_title:
-				rtStr += "%s(回复\"维基编号 %s\"查看详情)\n"%(title, iid)
+				rtStr += "%s\n(回复\"维基编号 %s\"查看详情)\n\n"%(title, iid)
 				id_set.add(iid)
 
 		results_title = search_index(queryLine=queryLine, query_field="content", N=20)
