@@ -12,6 +12,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in unicode!
 	rtStr = ""
 	query_date = timezone.now()
 	original_query = queryLine
+	return ""
 	if queryLine.startswith(u"维基编号 "):
 		iid = queryLine[len(u"维基编号 "):]
 		results = search_index(queryLine=iid, query_field="iid", N=1)
