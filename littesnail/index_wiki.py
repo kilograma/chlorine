@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from whoosh.index import create_in
+from whoosh.index import create_in, open_dir
 from whoosh.fields import *
 import jieba
 from whoosh.qparser import QueryParser
