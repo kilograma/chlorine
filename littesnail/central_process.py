@@ -51,9 +51,7 @@ def responseMsg(request):
 	replyContent = ""
 	needed_search_count = 5
 	if need_youdao_result(queryStr):
-		replyContent += get_youdao_result(queryStr)
-		print type(replyContent)
-		print replyContent
+		replyContent += get_youdao_result(queryStr).encode("UTF-8")
 		needed_search_count -= 1 
 	if need_wiki_result(queryStr):
 		replyContent += get_wiki_result(queryStr, user_id, msg_id)
