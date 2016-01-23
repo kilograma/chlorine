@@ -49,7 +49,7 @@ def responseMsg(request):
 	replyContent = ""
 	needed_search_count = 5
 	if need_youdao_result(queryStr):
-		replyContent += getYoudaoResult(queryStr)
+		replyContent += get_youdao_result(queryStr)
 		needed_search_count -= 1 
 	if need_wiki_result:
 		replyContent += get_wiki_result(queryStr)
