@@ -51,7 +51,7 @@ def responseMsg(request):
 	if need_youdao_result(queryStr):
 		replyContent += get_youdao_result(queryStr)
 		needed_search_count -= 1 
-	if need_wiki_result:
+	if need_wiki_result(queryStr):
 		replyContent += get_wiki_result(queryStr)
 		needed_search_count -= 1
 	if len(replyContent) == 0:
