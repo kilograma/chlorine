@@ -10,9 +10,9 @@ def need_wiki_result(queryLine):
 
 def excerpt(content, msg_id):
 	content = content.decode("UTF-8")
-	b = len(content) > 1500
+	b = len(content) > 500
 	if b:
-		content = content[0:1500]
+		content = content[0:500]
 		addon = "...以上为摘要，更多内容参见https://zh.wikipedia.org/wiki?curid=%s"%msg_id
 		content += addon.decode("UTF-8")
 	return content.encode("UTF-8")
@@ -53,7 +53,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 			for iid, title, content in results_title:
 				if iid in id_set:
 					continue
-				rtStr += "%s(回复\"维基编号 %s\"查看)\n"%(title, iid)
+				rtStr += "%s\n(回复\"维基编号 %s\"查看)\n\n"%(title, iid)
 				id_set.add(iid)
 				cnt += 1
 				if cnt == 5:
