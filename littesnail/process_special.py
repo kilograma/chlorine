@@ -5,9 +5,9 @@ from process_wiki import get_wiki_result, need_wiki_result
 from process_travel import need_travel_result, get_travel_result
 
 def need_special_result(queryStr):
-	if queryLine.startswith("旅游 "):
+	if queryStr.startswith("旅游 "):
 		return True
-	if queryLine.startswith("百度百科 "):
+	if queryStr.startswith("百度百科 "):
 		return True
 	return False
 
