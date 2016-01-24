@@ -38,10 +38,10 @@ def paraseYouDaoXml(rootElem):
 				replyContent = "%s%s\n" % (replyContent, child.text)
 			# 有道翻译
 			elif child.tag == 'translation': 
-				replyContent = '%s%s\n%s\n' % (replyContent, '-' * 3 + u'有道翻译' + '-' * 3, child[0].text)
+				replyContent = '%s%s\n%s\n' % (replyContent, '-' + u'有道翻译' + '-' , child[0].text)
 			# 有道词典-基本词典
 			elif child.tag == 'basic': 
-				replyContent = "%s%s\n" % (replyContent, '-' * 3 + u'基本词典' + '-' * 3)
+				replyContent = "%s%s\n" % (replyContent, '-' + u'基本词典' + '-')
 				for c in child:
 					if c.tag == 'phonetic':
 						replyContent = '%s%s\n' % (replyContent, c.text)
@@ -50,7 +50,7 @@ def paraseYouDaoXml(rootElem):
 							replyContent = '%s%s\n' % (replyContent, ex.text)
 			# 有道词典-网络释义
 			elif child.tag == 'web': 
-				replyContent = "%s%s\n" % (replyContent, '-' * 3 + u'网络释义' + '-' * 3)
+				replyContent = "%s%s\n" % (replyContent, '-' + u'网络释义' + '-')
 				for explain in child.findall('explain'):
 					for key in explain.findall('key'):
 						replyContent = '%s%s\n' % (replyContent, key.text)

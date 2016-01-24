@@ -3,61 +3,49 @@
 from index_wiki import search_index
 from django.utils import timezone
 from models import *
-import jieba
+
+from utils import get_split, word_seg_for_search, word_seg_for_index
 
 def need_wiki_result(queryLine):
 	return True
-
-def excerpt(content, msg_id):
-	content = content.decode("UTF-8")
-	b = len(content) > 500
-	if b:
-		content = content[0:500]
-		addon = "...以上为摘要，更多内容参见https://zh.wikipedia.org/wiki?curid=%s"%msg_id
-		content += addon.decode("UTF-8")
-	return content.encode("UTF-8")
-
 
 def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	rtStr = ""
 	query_date = timezone.now()
 	original_query = queryLine
-	if queryLine.startswith("维基编号 "):
-		iid = queryLine[len("维基编号 "):]
-		results = search_index(queryLine=iid.decode("UTF-8"), query_field="iid", N=1)
-		if len(results) == 0:
-			rtStr = "竟然没有找到和维基百科编号%s相关的条目...真的不是输错数字了吗?"%iid
-		else:
-			iid, title, content = results[0]
-			content = excerpt(content, msg_id)
-			rtStr = "关于%s，维基百科链接：https://zh.wikipedia.org/wiki?curid=%s。我们为您匹配的正文如下:\n%s\n"%(title, iid ,content)
+	if queryLine.startswith("百度百科 "):
+		queryLine = queryLine[len("百度百科 "):]
+	queryLine_back = queryLine
+	queryLine = word_seg_for_search(queryLine)
+	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="title", N=3)
+	id_set = set()
+	if len(results_title) == 0:
+		rtStr = "竟然没有找到包含%s的百度百科条目...要不要换个词试试?"%queryLine_back
 	else:
-		queryLine_back = queryLine
-		queryLine = ' '.join(jieba.cut(queryLine, cut_all=False))
-		results_title = search_index(queryLine=queryLine, query_field="title", N=10)
-		id_set = set()
-		if len(results_title) == 0:
-			rtStr = "竟然没有找到包含%s的维基条目...要不要换个词试试?"%queryLine_back
-		else:
-			rtStr = "您是不是在找下面的条目:\n"
-			for iid, title, content in results_title:
-				rtStr += "%s\n(回复\"维基编号 %s\"查看)\n\n"%(title, iid)
-				id_set.add(iid)
+		rtStr = "您是不是在找下列条目(点击查看):\n"
+		for url, title, content in results_title:
+			excerpt = content.decode('UTF-8')[0:60].encode('UTF-8').replace('\n', " ")
+			blank_pos = excerpt.find(" ")
+			if blank_pos != -1:
+				print blank_pos
+				excerpt = excerpt[blank_pos+1:]
+			rtStr += "<a href=\"%s\">%s</a>。%s...\n"%(url.strip(), title.strip(), excerpt.strip())
+			id_set.add(url)		
 
-		results_title = search_index(queryLine=queryLine, query_field="content", N=20)
-		if len(results_title) == 0:
-			rtStr = rtStr # do nothing
-		else:
-			rtStr += "还有一些相关条目也可以考虑:\n"
-			cnt = 0
-			for iid, title, content in results_title:
-				if iid in id_set:
-					continue
-				rtStr += "%s\n(回复\"维基编号 %s\"查看)\n\n"%(title, iid)
-				id_set.add(iid)
-				cnt += 1
-				if cnt == 5:
-					break
+	results_title = search_index(queryLine=queryLine, query_field="content", N=20)
+	if len(results_title) == 0:
+		rtStr = rtStr # do nothing
+	else:
+		rtStr += "其他人试过回复:\n"
+		cnt = 0
+		for url, title, _ in results_title:
+			if url in id_set:
+				continue
+			rtStr += "%s\n"%(title.strip())
+			id_set.add(url)
+			cnt += 1
+			if cnt == 10:
+				break
 
 	query_result_date = timezone.now()
 

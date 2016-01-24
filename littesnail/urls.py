@@ -10,7 +10,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^weixin/$', handleRequest),
-    url(r'^test/$', views.test, name='test'),
+    url(r'^test_wiki/$', views.test_wiki, name='test_wiki'),
+    url(r'^test_travel/$', views.test_travel, name='test_travel'),
     # url(r'^littesnail/', include('littesnail.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

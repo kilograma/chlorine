@@ -9,6 +9,7 @@ import urllib,urllib2,time,hashlib
 
 from process_youdao import get_youdao_result, need_youdao_result
 from process_wiki import get_wiki_result, need_wiki_result
+from process_special import need_special_result, get_special_result
 
 TOKEN = "weixin"
 
@@ -50,12 +51,15 @@ def responseMsg(request):
 	user_id = msg.get("FromUserName", "-1")
 	replyContent = ""
 	needed_search_count = 5
-	if need_youdao_result(queryStr):
-		replyContent += get_youdao_result(queryStr).encode("UTF-8")
-		needed_search_count -= 1 
-	if need_wiki_result(queryStr):
-		replyContent += get_wiki_result(queryStr, user_id, msg_id)
-		needed_search_count -= 1
+	if need_special_result(queryStr):
+		replyContent = get_special_result(queryStr, user_id, msg_id)
+	else:
+		if need_youdao_result(queryStr):
+			replyContent += get_youdao_result(queryStr).encode("UTF-8")
+			needed_search_count -= 1 
+		if need_wiki_result(queryStr):
+			replyContent += get_wiki_result(queryStr, user_id, msg_id)
+			needed_search_count -= 1
 	if len(replyContent) == 0:
 		replyContent = "目前测试阶段只有外语才会有回复~~"
 	return getReplyXml(msg,replyContent)
