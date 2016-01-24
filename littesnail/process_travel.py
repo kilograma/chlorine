@@ -24,9 +24,9 @@ def get_travel_result(queryLine, user_id, msg_id):# in UTF-8!
 	if len(results_title) == 0:
 		rtStr = "竟然没有找到包含%s的旅游信息...要不要换个词试试?"%queryLine_back
 	else:
-		rtStr = "看看这些:<br/>"
+		rtStr = "看看这些:\n====\n"
 		for url, title in results_title:
-			rtStr += "<a href=\"%s\">%s</a><br/>"%(url.strip(), title.strip())
+			rtStr += "<a href=\"%s\">%s</a>\n\n"%(url.strip(), title.strip())
 			id_set.add(url)		
 
 	query_result_date = timezone.now()
