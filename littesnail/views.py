@@ -14,11 +14,11 @@ def test_wiki(request):
 		print os.getcwd()
 		ix = open_dir("index/wiki_index")
 		with ix.searcher() as searcher:
-			qstr = "中华共和国"
+			qstr = "数学"
 			rstr = get_wiki_result(qstr, "-1", "-1")
 			print rstr
 			print "=============="
-			qstr = ' '.join(jieba.cut("中华共和国", cut_all=False))
+			qstr = ' '.join(jieba.cut("数学", cut_all=False))
 			query = QueryParser("title", ix.schema).parse(qstr)
 			results = searcher.search(query)
 			for r in results:

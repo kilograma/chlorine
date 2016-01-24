@@ -19,7 +19,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	print 111, queryLine
 	queryLine = word_seg_for_search(queryLine)
 	print 222, queryLine
-	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="title", N=5)
+	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="title", N=3)
 	print 333
 	id_set = set()
 	if len(results_title) == 0:
@@ -34,20 +34,20 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 			rtStr += "<a href=\"%s\">%s</a>。%s...\n\n"%(url.strip(), title.strip(), excerpt.strip())
 			id_set.add(url)		
 
-	# results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="content", N=10)
-	# if len(results_title) == 0:
-	# 	rtStr = rtStr # do nothing
-	# else:
-	# 	rtStr += "===\n其他人试过回复:\n"
-	# 	cnt = 0
-	# 	for url, title, _ in results_title:
-	# 		if url in id_set:
-	# 			continue
-	# 		rtStr += "%s\n"%(title.strip())
-	# 		id_set.add(url)
-	# 		cnt += 1
-	# 		if cnt == 10:
-	# 			break
+	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="content", N=10)
+	if len(results_title) == 0:
+		rtStr = rtStr # do nothing
+	else:
+		rtStr += "===\n其他人试过:\n"
+		cnt = 0
+		for url, title, _ in results_title:
+			if url in id_set:
+				continue
+			rtStr += "%s\n"%(title.strip())
+			id_set.add(url)
+			cnt += 1
+			if cnt == 10:
+				break
 
 	query_result_date = timezone.now()
 

@@ -22,7 +22,7 @@ def make_index(wiki_path):
 	url = None
 	lc = 0
 	for line in open(wiki_path):
-		try:
+		if True:
 			lc += 1
 			if lc % 100 == 0:
 				print lc
@@ -39,18 +39,20 @@ def make_index(wiki_path):
 				for l in lines:
 					content += ' ' + word_seg_for_index(l)
 				content = content.strip()
-				content_show = '\n'.join(lines)
+				content_show = '\n'.join(lines[1:])
+				#print title
 				#print content
 				writer.add_document(url=url.decode('UTF-8'), title=word_seg_for_index(title).decode('UTF-8'), title_show=title.decode('UTF-8'), content=content.decode('UTF-8'), content_show=content_show.decode('UTF-8'))
+				#break
 			else:
 				if len(line) == 0:
 					continue
 				if len(lines) == 0:
 					title = line
 				lines.append(line)
-		except:
-			print line
-			pass
+		#except:
+		#	print line
+		#	pass
 
 	writer.commit()
 	return
@@ -86,4 +88,5 @@ def search_index(queryLine, query_field, N):#unicode!!!
 
 
 if False:
-	make_index('../data/baike_simplified.txt')
+	make_index('../data/mix_simplified.txt')
+
