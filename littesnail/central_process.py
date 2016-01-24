@@ -54,7 +54,7 @@ def responseMsg(request):
 	try:
 		if need_special_result(queryStr):
 			replyContent = get_special_result(queryStr, user_id, msg_id)
-			print queryStr
+			print 'special:', queryStr
 			print replyContent
 		else:
 			if need_youdao_result(queryStr):
@@ -63,7 +63,7 @@ def responseMsg(request):
 			if need_wiki_result(queryStr):
 				replyContent += get_wiki_result(queryStr, user_id, msg_id)
 				needed_search_count -= 1
-				print queryStr
+				print 'wiki', queryStr
 				print replyContent
 	except:
 		print "出问题了", queryStr, user_id

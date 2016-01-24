@@ -16,8 +16,11 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	if queryLine.startswith("百度百科 "):
 		queryLine = queryLine[len("百度百科 "):]
 	queryLine_back = queryLine
+	print 111, queryLine
 	queryLine = word_seg_for_search(queryLine)
+	print 222, queryLine
 	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="title", N=10)
+	print 333
 	id_set = set()
 	if len(results_title) == 0:
 		rtStr = "竟然没有找到包含%s的百度百科条目...要不要换个词试试?"%queryLine_back
