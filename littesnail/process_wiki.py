@@ -22,21 +22,21 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	if len(results_title) == 0:
 		rtStr = "竟然没有找到包含%s的百度百科条目...要不要换个词试试?"%queryLine_back
 	else:
-		rtStr = "您是不是在找下列条目(点击查看):\n"
+		rtStr = "您是不是在找下列条目(点击查看):\n\n"
 		for url, title, content in results_title:
 			excerpt = content.decode('UTF-8')[0:60].encode('UTF-8').replace('\n', " ")
 			blank_pos = excerpt.find(" ")
 			if blank_pos != -1:
 				print blank_pos
 				excerpt = excerpt[blank_pos+1:]
-			rtStr += "<a href=\"%s\">%s</a>。%s...\n"%(url.strip(), title.strip(), excerpt.strip())
+			rtStr += "<a href=\"%s\">%s</a>。%s...\n\n"%(url.strip(), title.strip(), excerpt.strip())
 			id_set.add(url)		
 
 	results_title = search_index(queryLine=queryLine, query_field="content", N=20)
 	if len(results_title) == 0:
 		rtStr = rtStr # do nothing
 	else:
-		rtStr += "其他人试过回复:\n"
+		rtStr += "===\n其他人试过回复:\n"
 		cnt = 0
 		for url, title, _ in results_title:
 			if url in id_set:
