@@ -62,6 +62,7 @@ def responseMsg(request):
 				replyContent += get_wiki_result(queryStr, user_id, msg_id)
 				needed_search_count -= 1
 	except:
+		print "出问题了", queryStr, user_id
 		pass
 	if len(replyContent) == 0:
 		replyContent = "好像服务出了点问题~~"
