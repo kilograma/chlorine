@@ -72,9 +72,9 @@ def search_index(queryLine, query_field, N):#unicode!!!
 		print results == None
 		print len(results), type(results)
 		for r in results:
-			print r['url'].encode('utf-8')
-			print r['title_show'].encode('UTF-8')
-			print r['content_show'].encode('UTF-8')
+			print N, "url", r['url'].encode('utf-8')
+			print N, "title_show", r['title_show'].encode('UTF-8')
+			print M, "content_show",r['content_show'].encode('UTF-8')
 			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
 			N -= 1
 			print N
