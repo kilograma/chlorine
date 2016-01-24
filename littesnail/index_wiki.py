@@ -56,6 +56,7 @@ def make_index(wiki_path):
 	return
 
 def search_index(queryLine, query_field, N):#unicode!!!
+	return "123"
 	global ix
 	global WIKI_INDEX_DIR
 	if not ix:
