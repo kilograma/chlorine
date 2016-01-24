@@ -13,21 +13,21 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	rtStr = ""
 	query_date = timezone.now()
 	original_query = queryLine
-	if queryLine.startswith("百度百科 "):
-		queryLine = queryLine[len("百度百科 "):]
+	if queryLine.startswith("百科 "):
+		queryLine = queryLine[len("百科 "):]
 	queryLine_back = queryLine
-	print 111, queryLine
+	#print 111, queryLine
 	queryLine = word_seg_for_search(queryLine)
-	print 222, queryLine
+	#print 222, queryLine
 	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="title", N=3)
-	print 333
+	#print 333
 	id_set = set()
 	if len(results_title) == 0:
-		rtStr = "竟然没有找到包含%s的百度百科条目...要不要换个词试试?"%queryLine_back
+		rtStr = "竟然没有找到包含%s的百科条目...要不要换个词试试?\n"%queryLine_back
 	else:
-		#rtStr = "您是不是在找下列条目(点击查看):\n\n"
+		rtStr = "客观，我们有(点击查看):\n\n"
 		for url, title, content in results_title:
-			excerpt = content.decode('UTF-8')[0:40].encode('UTF-8').replace('\n', " ")
+			excerpt = content.decode('UTF-8')[0:60].encode('UTF-8').replace('\n', " ")
 			blank_pos = excerpt.find(" ")
 			if blank_pos != -1:
 				excerpt = excerpt[blank_pos+1:]
@@ -38,11 +38,12 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	if len(results_title) == 0:
 		rtStr = rtStr # do nothing
 	else:
-		rtStr += "===\n其他人试过:\n"
 		cnt = 0
 		for url, title, _ in results_title:
 			if url in id_set:
 				continue
+			if cnt == 0:
+				rtStr += "===\n其他人试过:\n"
 			rtStr += "%s\n"%(title.strip())
 			id_set.add(url)
 			cnt += 1

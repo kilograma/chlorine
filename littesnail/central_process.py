@@ -54,8 +54,8 @@ def responseMsg(request):
 	try:
 		if need_special_result(queryStr):
 			replyContent = get_special_result(queryStr, user_id, msg_id)
-			print 'special:', queryStr
-			print replyContent
+			#print 'special:', queryStr
+			#print replyContent
 		else:
 			if need_youdao_result(queryStr):
 				replyContent += get_youdao_result(queryStr).encode("UTF-8")
@@ -63,13 +63,13 @@ def responseMsg(request):
 			if need_wiki_result(queryStr):
 				replyContent += get_wiki_result(queryStr, user_id, msg_id)
 				needed_search_count -= 1
-				print 'wiki', queryStr
-				print replyContent
+				#print 'wiki', queryStr
+				#print replyContent
 	except:
 		print "出问题了", queryStr, user_id
 		pass
 	if len(replyContent) == 0:
-		replyContent = "好像服务出了点问题~~"
+		replyContent = "好像服务出了点问题~~深吸一口气...嚎！不，再试一次..."
 
 	uni_reply = replyContent.decode("UTF-8")
 	uni_reply = uni_reply[:610]

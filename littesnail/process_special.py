@@ -7,13 +7,13 @@ from process_travel import need_travel_result, get_travel_result
 def need_special_result(queryStr):
 	if queryStr.startswith("旅游 "):
 		return True
-	if queryStr.startswith("百度百科 "):
+	if queryStr.startswith("百科 "):
 		return True
 	return False
 
 def get_special_result(queryStr, user_id, msg_id):
 	if queryStr.startswith("旅游 "):
 		return get_travel_result(queryLine=queryStr, user_id=user_id, msg_id=msg_id)
-	if queryStr.startswith("百度百科 "):
+	if queryStr.startswith("百科 "):
 		return get_wiki_result(queryLine=queryStr, user_id=user_id, msg_id=msg_id)
 	return None
