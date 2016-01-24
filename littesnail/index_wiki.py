@@ -70,6 +70,7 @@ def search_index(queryLine, query_field, N):#unicode!!!
 		for r in results:
 			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
 			N -= 1
+			print N
 			if N == 0:
 				break
 	return rt
