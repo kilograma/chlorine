@@ -68,6 +68,7 @@ def search_index(queryLine, query_field, N):#unicode!!!
 		results = searcher.search(query, limit=N)
 		print 233333
 
+		print results == None
 		for r in results:
 			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
 			N -= 1

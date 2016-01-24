@@ -27,7 +27,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	else:
 		#rtStr = "您是不是在找下列条目(点击查看):\n\n"
 		for url, title, content in results_title:
-			excerpt = content.decode('UTF-8')[0:50].encode('UTF-8').replace('\n', " ")
+			excerpt = content.decode('UTF-8')[0:40].encode('UTF-8').replace('\n', " ")
 			blank_pos = excerpt.find(" ")
 			if blank_pos != -1:
 				excerpt = excerpt[blank_pos+1:]
