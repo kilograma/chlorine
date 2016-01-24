@@ -27,12 +27,11 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 			excerpt = content.decode('UTF-8')[0:60].encode('UTF-8').replace('\n', " ")
 			blank_pos = excerpt.find(" ")
 			if blank_pos != -1:
-				print blank_pos
 				excerpt = excerpt[blank_pos+1:]
 			rtStr += "<a href=\"%s\">%s</a>。%s...\n\n"%(url.strip(), title.strip(), excerpt.strip())
 			id_set.add(url)		
 
-	results_title = search_index(queryLine=queryLine, query_field="content", N=20)
+	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="content", N=20)
 	if len(results_title) == 0:
 		rtStr = rtStr # do nothing
 	else:
