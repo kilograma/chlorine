@@ -61,7 +61,7 @@ def search_index(queryLine, query_field, N):#unicode!!!
 	if not ix:
 		ix = open_dir(WIKI_INDEX_DIR)
 	rt = []
-	return rt
+	#return rt
 	print 21111
 	with ix.searcher() as searcher:
 		query = QueryParser(query_field, ix.schema).parse(queryLine)
