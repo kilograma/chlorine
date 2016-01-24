@@ -31,7 +31,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 			rtStr += "<a href=\"%s\">%s</a>。%s...\n\n"%(url.strip(), title.strip(), excerpt.strip())
 			id_set.add(url)		
 
-	results_title = search_index(queryLine=queryLine.decode('UTF-8'), query_field="content", N=20)
+	results_title = search_index(queryLine=queryLine, query_field="content", N=20)
 	if len(results_title) == 0:
 		rtStr = rtStr # do nothing
 	else:
