@@ -56,12 +56,12 @@ def make_index(wiki_path):
 	return
 
 def search_index(queryLine, query_field, N):#unicode!!!
-	return "123"
 	global ix
 	global WIKI_INDEX_DIR
 	if not ix:
 		ix = open_dir(WIKI_INDEX_DIR)
 	rt = []
+	return rt
 	print 21111
 	with ix.searcher() as searcher:
 		query = QueryParser(query_field, ix.schema).parse(queryLine)
