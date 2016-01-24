@@ -12,8 +12,8 @@ def need_special_result(queryStr):
 	return False
 
 def get_special_result(queryStr, user_id, msg_id):
-	if queryLine.startswith("旅游 "):
+	if queryStr.startswith("旅游 "):
 		return get_travel_result(queryLine=queryStr, user_id=user_id, msg_id=msg_id)
-	if queryLine.startswith("百度百科 "):
+	if queryStr.startswith("百度百科 "):
 		return get_wiki_result(queryLine=queryStr, user_id=user_id, msg_id=msg_id)
 	return None
