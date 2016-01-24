@@ -25,7 +25,7 @@ def get_wiki_result(queryLine, user_id, msg_id):# in UTF-8!
 	if len(results_title) == 0:
 		rtStr = "竟然没有找到包含%s的百科条目...要不要换个词试试?\n"%queryLine_back
 	else:
-		rtStr = "客观，我们有(点击查看):\n\n"
+		rtStr = "客官，我们有(点击查看):\n\n"
 		for url, title, content in results_title:
 			excerpt = content.decode('UTF-8')[0:60].encode('UTF-8').replace('\n', " ")
 			blank_pos = excerpt.find(" ")

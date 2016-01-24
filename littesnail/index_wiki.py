@@ -63,24 +63,18 @@ def search_index(queryLine, query_field, N):#unicode!!!
 	if not ix:
 		ix = open_dir(WIKI_INDEX_DIR)
 	rt = []
-	#return rt
-	print 21111
 	with ix.searcher() as searcher:
 		query = QueryParser(query_field, ix.schema).parse(queryLine)
-		print 21222
-		print N
+		#print 21222
 		results = searcher.search(query, limit=N)
-		print 233333
+		#print 233333
 
 		print results == None
 		print len(results), type(results)
 		for r in results:
-			print N, "url", r['url'].encode('utf-8')
-			print N, "title_show", r['title_show'].encode('UTF-8')
-			print N, "content_show",r['content_show'].encode('UTF-8')
 			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
 			N -= 1
-			print N
+			#print N
 			if N == 0:
 				break
 	return rt
