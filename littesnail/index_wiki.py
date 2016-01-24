@@ -65,8 +65,9 @@ def search_index(queryLine, query_field, N):#unicode!!!
 	with ix.searcher() as searcher:
 		query = QueryParser(query_field, ix.schema).parse(queryLine)
 		print 21222
-		results = searcher.search(query)
+		results = searcher.search(query, limit=N)
 		print 233333
+
 		for r in results:
 			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
 			N -= 1
