@@ -19,7 +19,7 @@ def get_travel_result(queryLine, user_id, msg_id):# in UTF-8!
 		queryLine = queryLine[len("旅游 "):]
 	queryLine_back = queryLine
 	queryLine = word_seg_for_search(queryLine)
-	results_title = search_index(queryLine=queryLine.decode('UTF-8'), N=14)
+	results_title = search_index(queryLine=queryLine.decode('UTF-8'), N=9)
 	id_set = set()
 	if len(results_title) == 0:
 		rtStr = "竟然没有找到包含%s的旅游信息...要不要换个词试试?"%queryLine_back
