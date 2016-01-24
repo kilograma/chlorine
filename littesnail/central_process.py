@@ -70,6 +70,10 @@ def responseMsg(request):
 		pass
 	if len(replyContent) == 0:
 		replyContent = "好像服务出了点问题~~"
+
+	uni_reply = replyContent.decode("UTF-8")
+	uni_reply = uni_reply[:610]
+	replyContent = uni_reply.encode("UTF-8")
 	return getReplyXml(msg,replyContent)
 
 def paraseMsgXml(rootElem):
