@@ -60,7 +60,6 @@ def responseMsg(request):
 		r = createResult(queryStr)
 		r.process()
 		replyContent = r.result_str
-		print 1,2,3
 	# except:
 	# 	print "出问题了", queryStr, user_id
 	# 	pass

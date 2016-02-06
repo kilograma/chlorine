@@ -32,7 +32,7 @@ class ResultYoudao(Result):
 		req = urllib2.Request(url=youdaoURL)
 		result = urllib2.urlopen(req).read()
 		replyContent = self.paraseYouDaoXml(ET.fromstring(result))
-		return replyContent
+		return replyContent.encode("UTF-8")
 
 	def paraseYouDaoXml(self, rootElem):
 		replyContent = ''

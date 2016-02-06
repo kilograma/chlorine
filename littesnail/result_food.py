@@ -30,7 +30,7 @@ class ResultFood(Result):
 			content = content.replace('\n', " ").strip()
 			if title == self.queryLine_untokenized:
 				rs = title + "\n" + content
-				self.result_str = rs.decode('UTF-8')[0:60].encode('UTF-8')
+				self.result_str = rs.decode('UTF-8')[0:640].encode('UTF-8')
 				return
 			self.match_results.append(title)
 
