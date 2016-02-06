@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^weixin/$', handleRequest),
     url(r'^test_wiki/$', views.test_wiki, name='test_wiki'),
     url(r'^test_travel/$', views.test_travel, name='test_travel'),
+    url(r'^test_food/$', views.test_food, name='test_food'),
+    url(r'^test_youdao/$', views.test_youdao, name='test_youdao'),
     # url(r'^littesnail/', include('littesnail.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

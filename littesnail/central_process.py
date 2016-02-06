@@ -6,10 +6,14 @@ from django.utils.encoding import smart_str, smart_unicode
 
 import xml.etree.ElementTree as ET
 import urllib,urllib2,time,hashlib
+from django.utils import timezone
 
-from process_youdao import get_youdao_result, need_youdao_result
-from process_wiki import get_wiki_result, need_wiki_result
-from process_special import need_special_result, get_special_result
+# from process_youdao import get_youdao_result, need_youdao_result
+# from process_wiki import get_wiki_result, need_wiki_result
+# from process_special import need_special_result, get_special_result
+
+from result import Result
+from create_result import createResult
 
 TOKEN = "weixin"
 
@@ -42,38 +46,33 @@ def checkSignature(request):
 		return None
 
 def responseMsg(request):
-	#rawStr = smart_str(request.raw_post_data)
 	rawStr = smart_str(request.body)
-	#rawStr = smart_str(request.POST['XML'])
 	msg = paraseMsgXml(ET.fromstring(rawStr))
 	queryStr = msg.get('Content','You have input nothing~')
 	msg_id = msg.get('MsgId', "-1")
 	user_id = msg.get("FromUserName", "-1")
+	query_date = timezone.now()
 	replyContent = ""
 	needed_search_count = 5
-	try:
-		if need_special_result(queryStr):
-			replyContent = get_special_result(queryStr, user_id, msg_id)
-			#print 'special:', queryStr
-			#print replyContent
-		else:
-			if need_youdao_result(queryStr):
-				replyContent += get_youdao_result(queryStr).encode("UTF-8")
-				needed_search_count -= 1 
-			if need_wiki_result(queryStr):
-				replyContent += get_wiki_result(queryStr, user_id, msg_id)
-				needed_search_count -= 1
-				#print 'wiki', queryStr
-				#print replyContent
-	except:
-		print "出问题了", queryStr, user_id
-		pass
+	if True:
+		r = Result.createResult(queryStr)
+		r.process()
+		replyContent = r.result_str
+	# except:
+	# 	print "出问题了", queryStr, user_id
+	# 	pass
 	if len(replyContent) == 0:
 		replyContent = "好像服务出了点问题~~深吸一口气...嚎！不，再试一次..."
 
 	uni_reply = replyContent.decode("UTF-8")
-	uni_reply = uni_reply[:610]
+	uni_reply = uni_reply[:640]
 	replyContent = uni_reply.encode("UTF-8")
+
+	query_result_date = timezone.now()
+
+	uq = UserQuery(user_id=user_id, query_str=queryStr, query_date=query_date, query_result_date=query_result_date, query_msg_id=msg_id, query_result=replyContent)
+	uq.save()
+
 	return getReplyXml(msg,replyContent)
 
 def paraseMsgXml(rootElem):

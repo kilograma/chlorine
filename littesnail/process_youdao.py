@@ -7,6 +7,7 @@ YOUDAO_KEY = 1416234552
 YOUDAO_KEY_FROM = "Hstream"
 YOUDAO_DOC_TYPE = "xml"
 
+
 def need_youdao_result(queryStr):
 	return not utils.has_chinese(queryStr)
 
@@ -59,3 +60,7 @@ def paraseYouDaoXml(rootElem):
 							replyContent = '%s%s\n' % (replyContent, ex.text)
 					replyContent = '%s%s\n' % (replyContent,'--')
 	return replyContent
+
+if __name__=='__main__':
+	queryStr = "what do you mean?"
+	assert(need_youdao_result(queryStr) == True)
