@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 import urllib,urllib2,time,hashlib
 from django.utils import timezone
 
+from models import *
+
 # from process_youdao import get_youdao_result, need_youdao_result
 # from process_wiki import get_wiki_result, need_wiki_result
 # from process_special import need_special_result, get_special_result
