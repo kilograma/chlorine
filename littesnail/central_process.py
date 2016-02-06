@@ -55,7 +55,7 @@ def responseMsg(request):
 	replyContent = ""
 	needed_search_count = 5
 	if True:
-		r = Result.createResult(queryStr)
+		r = createResult(queryStr)
 		r.process()
 		replyContent = r.result_str
 	# except:
