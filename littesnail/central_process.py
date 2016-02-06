@@ -60,6 +60,7 @@ def responseMsg(request):
 		r = createResult(queryStr)
 		r.process()
 		replyContent = r.result_str
+		print 1,2,3
 	# except:
 	# 	print "出问题了", queryStr, user_id
 	# 	pass
@@ -67,6 +68,7 @@ def responseMsg(request):
 		replyContent = "好像服务出了点问题~~深吸一口气...嚎！不，再试一次..."
 
 	print replyContent
+	print len(replyContent)
 	uni_reply = replyContent.decode("UTF-8")
 	uni_reply = uni_reply[:640]
 	replyContent = uni_reply.encode("UTF-8")
