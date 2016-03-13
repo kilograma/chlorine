@@ -21,9 +21,14 @@ class SearchHandler:
     self.log = {}
 
   def search(self, keyword):#keyword in unicode!
-    r = createResult(keyword) #unicode
-    r.process()
-    replyContent = r.result_str
+    try:
+      r = createResult(keyword) #unicode
+      r.process()
+      replyContent = r.result_str
+    except:
+      print "Exception! for keyword:=", keyword
+      replyContent = ""
+      pass
     return replyContent
 
 if __name__ == '__main__':
