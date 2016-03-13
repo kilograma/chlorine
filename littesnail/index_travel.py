@@ -28,7 +28,7 @@ def make_index(travel_raw_path):
 			if len(ss) != 2:
 				continue
 			url, title = ss
-			writer.add_document(url=url.decode('UTF-8'), title=word_seg_for_index(title).decode('UTF-8'), title_show=title.decode('UTF-8'))
+			writer.add_document(url=url, title=word_seg_for_index(title).decode('UTF-8'), title_show=title.decode('UTF-8'))
 		except:
 			print line
 			pass
@@ -46,7 +46,7 @@ def search_index(queryLine, N):#unicode!!!
 		query = QueryParser("title", ix.schema).parse(queryLine)
 		results = searcher.search(query)
 		for r in results:
-			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8')])
+			rt.append([r['url'], r['title_show']])
 			N -= 1
 			if N == 0:
 				break

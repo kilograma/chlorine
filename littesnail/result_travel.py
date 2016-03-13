@@ -14,10 +14,10 @@ class ResultTravel(Result):
 
 	def get_result(self):
 		queryLine = self.queryLine
-		if queryLine.startswith("旅游 "):
-			queryLine = queryLine[len("旅游 "):]
+		if queryLine.startswith(u"旅游 "):
+			queryLine = queryLine[len(u"旅游 "):]
 		queryLine = word_seg_for_search(queryLine)
-		results_title = search_index(queryLine=queryLine.decode('UTF-8'), N=9)
+		results_title = search_index(queryLine=queryLine, N=9)
 		if len(results_title) == 0:
 			pass
 		else:
@@ -30,9 +30,9 @@ class ResultTravel(Result):
 		queryLine = word_seg_for_search(queryLine)
 		id_set = set()
 		if len(self.results) == 0:
-			self.result_str = "竟没找到包含%s的旅游信息...换个词?"%self.queryLine
+			self.result_str = u"竟没找到包含%s的旅游信息...换个词?"%self.queryLine
 		else:
 			for url, title in self.results:
-				self.result_str += "%s%s\n\n"%(title.strip(), url.strip())
+				self.result_str += u"%s%s\n\n"%(title.strip(), url.strip())
 				id_set.add(url)		
 		return

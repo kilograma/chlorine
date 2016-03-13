@@ -17,6 +17,18 @@ from models import *
 from result import Result
 from create_result import createResult
 
+import sys
+sys.path.append('./littesnail/gen-py')
+
+from thsearch import ThSearch
+from thsearch.ttypes import *
+from thsearch.constants import *
+
+from thrift import Thrift
+from thrift.transport import TSocket
+from thrift.transport import TTransport
+from thrift.protocol import TBinaryProtocol
+
 TOKEN = "weixin"
 
 @csrf_exempt
@@ -47,37 +59,40 @@ def checkSignature(request):
 	else:
 		return None
 
-def responseMsg(request):
-	rawStr = smart_str(request.body)
-	msg = paraseMsgXml(ET.fromstring(rawStr))
-	queryStr = msg.get('Content','You have input nothing~')
-	msg_id = msg.get('MsgId', "-1")
-	user_id = msg.get("FromUserName", "-1")
-	query_date = timezone.now()
+def responseMsg(request, is_test=False):
+	if not is_test:
+		rawStr = smart_str(request.body)
+		msg = paraseMsgXml(ET.fromstring(rawStr))
+		queryStr = msg.get('Content','You have input nothing~')
+		msg_id = msg.get('MsgId', "-1")
+		user_id = msg.get("FromUserName", "-1")
+		query_date = timezone.now()
+	else:
+		queryStr = request
 	replyContent = ""
 	needed_search_count = 5
 	if True:
-		r = createResult(queryStr)
-		r.process()
-		replyContent = r.result_str
-	# except:
-	# 	print "出问题了", queryStr, user_id
-	# 	pass
+		transport = TSocket.TSocket('localhost', 30303)
+  		transport = TTransport.TBufferedTransport(transport)
+  		protocol = TBinaryProtocol.TBinaryProtocol(transport)
+  		client = ThSearch.Client(protocol)
+  		transport.open()
+  		replyContent = client.search(queryStr.decode("UTF-8"))
 	if len(replyContent) == 0:
-		replyContent = "好像服务出了点问题~~深吸一口气...嚎！不，再试一次..."
+		replyContent = u"好像服务出了点问题~~深吸一口气...嚎！不，再试一次..."
 
-	#print replyContent
-	#print len(replyContent)
-	uni_reply = replyContent.decode("UTF-8")
-	uni_reply = uni_reply[:640]
+	uni_reply = replyContent[:640]
 	replyContent = uni_reply.encode("UTF-8")
 
-	query_result_date = timezone.now()
+	if not is_test:
+		query_result_date = timezone.now()
 
-	uq = UserQuery(user_id=user_id, query_str=queryStr, query_date=query_date, query_result_date=query_result_date, query_msg_id=msg_id, query_result=replyContent)
-	uq.save()
+		uq = UserQuery(user_id=user_id, query_str=queryStr, query_date=query_date, query_result_date=query_result_date, query_msg_id=msg_id, query_result=replyContent)
+		uq.save()
 
-	return getReplyXml(msg,replyContent)
+		return getReplyXml(msg,replyContent)
+	else:
+		return replyContent
 
 def paraseMsgXml(rootElem):
 	msg = {}

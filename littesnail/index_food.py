@@ -46,7 +46,7 @@ def search_index(queryLine, query_field, N):#unicode!!!
 		query = QueryParser(query_field, ix.schema).parse(queryLine)
 		results = searcher.search(query, limit=N)
 		for r in results:
-			rt.append([r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
+			rt.append([r['title_show'], r['content_show']])
 			N -= 1
 			if N == 0:
 				break

@@ -40,8 +40,6 @@ def make_index(wiki_path):
 					content += ' ' + word_seg_for_index(l)
 				content = content.strip()
 				content_show = '\n'.join(lines[1:])
-				#print title
-				#print content
 				writer.add_document(url=url.decode('UTF-8'), title=word_seg_for_index(title).decode('UTF-8'), title_show=title.decode('UTF-8'), content=content.decode('UTF-8'), content_show=content_show.decode('UTF-8'))
 				#break
 			else:
@@ -69,7 +67,7 @@ def search_index(queryLine, query_field, N):#unicode!!!
 		results = searcher.search(query, limit=N)
 		#print 233333
 		for r in results:
-			rt.append([r['url'].encode('utf-8'), r['title_show'].encode('UTF-8'), r['content_show'].encode('UTF-8')])
+			rt.append([r['url'], r['title_show'], r['content_show']])
 			N -= 1
 			#print N
 			if N == 0:
