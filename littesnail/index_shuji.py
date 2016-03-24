@@ -4,7 +4,7 @@ from whoosh.fields import *
 from whoosh.qparser import QueryParser
 from utils import *
 
-WEIBO_INDEX_DIR = "../index/shuji_index"
+WEIBO_INDEX_DIR = "index/shuji_index"
 
 ix = None
 

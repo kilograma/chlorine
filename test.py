@@ -30,3 +30,5 @@ if True:
 	print "==================="
 	print responseMsg("文艺 生活大爆炸", True)
 	print "==================="
+	print responseMsg("文艺 一步之遥", True)
+	print "==================="

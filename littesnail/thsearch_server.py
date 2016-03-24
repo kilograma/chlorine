@@ -15,20 +15,24 @@ import socket
 
 from result import Result
 from create_result import createResult
+from utils import help_info
 
 class SearchHandler:
   def __init__(self):
     self.log = {}
 
   def search(self, keyword):#keyword in unicode!
-    try:
+    if True:
       r = createResult(keyword) #unicode
-      r.process()
-      replyContent = r.result_str
-    except:
-      print "Exception! for keyword:=", keyword
-      replyContent = ""
-      pass
+      if r == None:
+        replyContent = help_info()
+      else:
+        r.process()
+        replyContent = r.result_str
+    #except:
+    #  print "Exception! for keyword:=", keyword
+    #  replyContent = ""
+    #  pass
     return replyContent
 
 if __name__ == '__main__':

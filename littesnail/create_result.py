@@ -19,4 +19,5 @@ def createResult(queryStr):
 		return ResultShuji(queryStr)
 	if has_chinese(queryStr):
 		return ResultWeibo(queryStr)
-	return ResultYoudao(queryStr)
+	#return ResultYoudao(queryStr)
+	return None
