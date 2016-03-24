@@ -13,6 +13,12 @@ def make_index(weibo_path):
 	global ix
 	global WEIBO_INDEX_DIR
 
+	valid_keys = set()
+	for line in open("../data/shuji_key.txt"):
+		line = line.strip()
+		if len(line) != 0:
+			valid_keys.add(line.decode("UTF-8"))
+
 	ix = create_in(WEIBO_INDEX_DIR, schema)
 	writer = ix.writer()
 
@@ -20,6 +26,7 @@ def make_index(weibo_path):
 	title = ""
 	url = None
 	lc = 0
+	p = re.compile(ur'《[^ ]+?》')
 	for line in open(weibo_path):
 		if True:
 			lc += 1
@@ -30,8 +37,21 @@ def make_index(weibo_path):
 			line = line.strip().decode("UTF-8")
 			if len(line) == 0:
 				continue
-			content = word_seg_for_index(line).strip()
+			keys = set()
+			objs = p.findall(line)
+			for obj in objs:
+				obj = obj[1:-1]
+				if obj in valid_keys:
+					keys.add(obj)
+					obj1 = re.sub(ur'[0-9a-zA-Z]+', ur'', obj).strip()
+					if len(obj1) > 0 and obj != obj1:
+						keys.add(obj1)
 			content_show = line
+			content = ' '.join(keys).strip()
+			if len(content) == 0:
+				continue
+			#content = word_seg_for_index(line).strip()
+			#content_show = line
 			writer.add_document(content=content, content_show=content_show)
 
 	writer.commit()

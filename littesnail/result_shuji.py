@@ -15,7 +15,9 @@ class ResultShuji(Result):
 
 	def get_result(self):
 		queryLine = self.queryLine
-		queryLine = word_seg_for_search(queryLine)
+		if queryLine.startswith(u"文艺 "):
+			queryLine = queryLine[len(u"文艺 "):]
+		#queryLine = word_seg_for_search(queryLine)
 		self.results = search_index(queryLine=queryLine, N=200)
 		return
 
@@ -23,12 +25,22 @@ class ResultShuji(Result):
 		queryLine = self.queryLine
 		if queryLine.startswith(u"文艺 "):
 			queryLine = queryLine[len(u"文艺 "):]
-		queryLine = word_seg_for_search(queryLine)
+		#queryLine = word_seg_for_search(queryLine)
 		if len(self.results) == 0:
 			self.result_str = u"竟然没有含%s的任何评论信息...你知不知道这个时候该做什么？立马告诉管理员去！"%self.queryLine
 		else:
 			self.result_str = u""
 			lc = 0
+			# has_list = []
+			# no_list = []
+			# for content in self.results:
+			# 	if queryLine in content:
+			# 		has_list.append(content)
+			# 	else:
+			# 		no_list.append(content)
+			# random.shuffle(has_list)
+			# random.shuffle(no_list)
+			# self.results = has_list + no_list
 			random.shuffle(self.results)
 			for content in self.results:
 				lc += 1

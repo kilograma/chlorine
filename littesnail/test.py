@@ -13,9 +13,8 @@ def get_only_chinese(line):
 			s += w.encode('UTF-8').strip()
 	return s
 
-punc_set = set(['，', '。', '！', '？', '《'])
-
-if True:
+if False: # clean weibo
+	punc_set = set(['，', '。', '！', '？', '《'])
 	junk_words = None
 	if junk_words == None:
 		junk_words = set()
@@ -53,3 +52,24 @@ if True:
 			fout.write(line + "\n")
 	fout.flush()
 	fout.close()
+
+if True:
+	names = {}
+	p = re.compile(ur'《[^ ]+?》')
+	lc = 0
+	for line in open("data/weibo.txt"):
+		lc += 1
+		if lc % 100000 == 0:
+			print lc
+		line = line.decode("utf8")
+		objs = p.findall(line)
+		for obj in objs:
+			obj = obj[1:-1]
+			names[obj] = names.get(obj, 0) + 1
+	fout = open("data/shuji_key.txt", "w")
+	for k,v in sorted(names.iteritems(), key=lambda d:d[1], reverse=True):
+		if v > 2 or v == 2 and len(k) <= 10:
+			fout.write("%s\n"%(k.encode("UTF-8")))
+	fout.flush()
+	fout.close()
+

@@ -32,3 +32,5 @@ if True:
 	print "==================="
 	print responseMsg("文艺 一步之遥", True)
 	print "==================="
+	print responseMsg("文艺 买凶拍人", True)
+	print "==================="
