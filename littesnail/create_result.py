@@ -17,7 +17,6 @@ def createResult(queryStr):
 		return ResultFood(queryStr)
 	if queryStr.startswith(u"文艺 "):
 		return ResultShuji(queryStr)
-	if has_chinese(queryStr):
-		return ResultWeibo(queryStr)
-	#return ResultYoudao(queryStr)
+	if not has_chinese(queryStr):
+		return ResultYoudao(queryStr)
 	return None
